@@ -1,0 +1,34 @@
+# This file should be included when you package your plugin.
+# Mandatory items:
+
+[general]
+name=wp_datasets
+qgisMinimumVersion=3.0
+description=A simple qgis 3 addon to downlaod wp datasets from WorldPop ftp server.
+version=0.1
+author=Nikolaos Ves
+email=vesnikos@gmail.com
+
+about=A Qgis (version > 3) for discovering and downloading WorldPop (GlobalProject) datasets.
+
+tracker=https://github.com/wpgp/wpgpQGIS/issues
+repository=https://github.com/wpgp/wpgpQGIS
+# End of mandatory metadata
+
+# Recommended items:
+
+# Uncomment the following line and add your changelog:
+# changelog=
+
+# Tags are comma separated with spaces allowed
+tags=worldpop, datasets, raster
+
+homepage=http://www.worldpop.org.uk/
+category=Web
+icon=media/wp.ico
+# experimental flag
+experimental=True
+
+# deprecated flag (applies to the whole plugin, not just a single version)
+deprecated=False
+
