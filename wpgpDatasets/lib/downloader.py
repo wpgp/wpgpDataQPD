@@ -43,7 +43,7 @@ class DownloadThread(QObject):
     def run(self, url: Union[str, Path], download_folder: Union[Path, str],):
         # start by calling the start method
 
-        self.url = self.project_folder.joinpath(Path(url))  # remote path
+        self.url = Path(url)  # remote path
         self.download_folder = Path(download_folder)
         self.filename = self.url.name
         self.filesize = self.ftp.get_filesilze(self.url)

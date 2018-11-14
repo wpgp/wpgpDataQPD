@@ -114,19 +114,20 @@ class WpCsvParser(object):
         if self._indexes is None:
             indexes = dict()
             header = self.df[0]
+            idx_id = np.where(header == 'ID')[0][0]
             idx_iso3 = np.where(header == 'ISO3')[0][0]
             idx_name_english = np.where(header == 'Country')[0][0]
             idx_cvt_name = np.where(header == 'Covariate')[0][0]
-            idx_rst_name = np.where(header == 'RasterFile')[0][0]
+            idx_path_to_raster = np.where(header == 'PathToRaster')[0][0]
             idx_description = np.where(header == 'Description')[0][0]
-            idx_folder = np.where(header == 'Folder')[0][0]
 
+            # column position in the csv
             indexes['idx_iso3'] = idx_iso3
             indexes['idx_name_english'] = idx_name_english
             indexes['idx_cvt_name'] = idx_cvt_name
-            indexes['idx_rst_name'] = idx_rst_name
+            indexes['idx_path_to_raster'] = idx_path_to_raster
             indexes['idx_description'] = idx_description
-            indexes['idx_folder'] = idx_folder
+            indexes['idx_id'] = idx_id
 
             # for k, v in indexes.items():
             #     print(k, v)
@@ -148,20 +149,21 @@ class WpCsvParser(object):
             warnings.warn('Warning, no products where found for this ISO. Check spelling')
             return [], [], []
 
-        per_iso_entries = _df[idx][:, [3, 6, 5, 4]]
-        name, description, folder, raster = np.split(per_iso_entries, 4, axis=1)
+        idx_name, idx_description, path_to_raster_idx, = self.indexes['idx_cvt_name'], \
+                                                         self.indexes['idx_description'], \
+                                                         self.indexes['idx_path_to_raster']
+
+        per_iso_entries = _df[idx][:, [idx_name, idx_description, path_to_raster_idx]]
+        name, description, path_to_raster = np.split(per_iso_entries, 3, axis=1)
 
         # clean double quotes if any
         name = np.core.defchararray.replace(name.astype(str), '"', '')
-        folder = np.core.defchararray.replace(folder.astype(str), '"', '')
-        raster_name = np.core.defchararray.replace(raster.astype(str), '"', '')
+        path_to_raster = np.core.defchararray.replace(path_to_raster.astype(str), '"', '')
         description = np.core.defchararray.replace(description.astype(str), '"', '')
-
-        path = [(x[0] + '/' + y[0]) for x, y in zip(folder, raster_name)]
 
         name, description, path = list(chain.from_iterable(name.tolist())), \
                                   list(chain.from_iterable(description.tolist())), \
-                                  path
+                                  list(chain.from_iterable(path_to_raster.tolist())),
 
         return list(zip(name, description, path))
 

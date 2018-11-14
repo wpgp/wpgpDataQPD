@@ -9,7 +9,7 @@ from .wp_datasets_dialog import WpMainWindow
 
 # Global Variables
 BASE_DIR = Path(__file__).parent  # Path object
-CSV_FILE_GZ = Path(BASE_DIR / 'media' / 'wpgAllCovariates.csv.gz')
+CSV_FILE_GZ = Path(BASE_DIR / 'media' / 'wpgpDatasets.csv.gz')
 INI_FILE = Path(BASE_DIR / 'config.ini')
 
 

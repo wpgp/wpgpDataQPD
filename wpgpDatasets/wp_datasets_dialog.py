@@ -95,6 +95,8 @@ class WpMainWindow(QtWidgets.QDialog, Ui_wpMainWindow):
         if len(item) == 0:
             return
         item = item[0]
+
+        # 3d index of the item contains the ftp path of the object to download
         URL = item.data(2, QtCore.Qt.DisplayRole)
 
         # Show warning that the user has not selected a valid selection.
@@ -102,9 +104,6 @@ class WpMainWindow(QtWidgets.QDialog, Ui_wpMainWindow):
             QMessageBox.information(self, 'Invalid Selection', 'Please select any of the child products to download.',
                                     QMessageBox.Ok)
             return
-
-        iso = Path(item.parent().data(1, QtCore.Qt.DisplayRole))
-        URL = iso.joinpath(URL).as_posix()
 
         self._do_download(URL)
 
