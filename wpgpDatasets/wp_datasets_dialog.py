@@ -1,5 +1,6 @@
 import configparser
 import sys
+import platform
 from pathlib import Path
 from typing import Union
 
@@ -48,7 +49,8 @@ class WpMainWindow(QtWidgets.QDialog, Ui_wpMainWindow):
         self.tree_widget.setSortingEnabled(True)
         self.tree_widget.header().setResizeContentsPrecision(500)
         self.tree_widget.header().setSectionResizeMode(0, QHeaderView.ResizeToContents)
-        self.tree_widget.header().resizeSections()
+        if platform.system == 'Windows':
+            self.tree_widget.header().resizeSections()
 
         # Add the data to the TreeWidget
 
