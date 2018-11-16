@@ -20,7 +20,7 @@ the WorldPop website and FTP server using a range of methods and tools.
 Installation Instructions
 -----
 
-1. Download the repository.
+1. Download the repository, using the top right green button.
 2. Place the  wpdatasets folder at your QGIS3 addon folder:
     * _Windows_ C:/Users/__username__/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins  
      _<Ubuntu>_ ~/.local/share/QGIS/QGIS3/profiles/default/python/plugins

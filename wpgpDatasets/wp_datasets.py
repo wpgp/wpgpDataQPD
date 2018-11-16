@@ -30,7 +30,7 @@ class WpDatasets:
 
         # Declare instance attributes
         self.actions = []
-        self.menu = u'&wp_datasets'
+        self.menu = u'&wpgpDatasets'
         # TODO: We are going to let the user set this up in a future iteration
         self.toolbar = self.iface.addToolBar(u'wpgpDatasets')
         self.toolbar.setObjectName(u'wpgpDatasets')
@@ -130,7 +130,7 @@ class WpDatasets:
         """Removes the plugin menu item and icon from QGIS GUI."""
         # Required
         for action in self.actions:
-            self.iface.removePluginMenu(u'&wp_datasets', action)
+            self.iface.removePluginMenu(u'&wpgpDatasets', action)
             self.iface.removeToolBarIcon(action)
         # remove the toolbar
         del self.toolbar
