@@ -122,9 +122,9 @@ class wpFtp(object):
 
         return to_local_absolute_path
 
-    def dl_wpgpAllCovariate(self)->Path:
+    def dl_wpgpDatasets(self)->Path:
         """
-        Get the manifest file wpgpAllCovariate from the ftp
+        Get the manifest file dl_wpgpDatasets from the ftp
         Compress it and save it in the path defined in the config.ini
         """
 

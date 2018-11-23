@@ -11,7 +11,7 @@ from PyQt5.QtWidgets import QFileDialog, QHeaderView, QMessageBox, QTreeWidgetIt
 from qgis.gui import QgisInterface
 
 from .lib import WpCsvParser
-from .lib.utils import qgis3_add_raster_to_project, get_default_download_directory, has_internet
+from .lib.utils import qgis3_add_raster_to_project, get_default_download_directory, has_internet, BASE_ROOT
 from .lib.about_window import Ui_AboutDialog
 from .lib.downloader import DownloadThread
 from .lib.main_window import Ui_wpMainWindow
@@ -26,8 +26,27 @@ def wpFactory(config: configparser.ConfigParser, iface: QgisInterface, parent=No
     if not has_internet():
         QMessageBox().information(parent, 'No internet :(', 'This plugin requires internet to function.', QMessageBox.Ok)
         return 0
-    else:
-        return WpMainWindow(config, iface, parent=None)
+
+    from .lib.wpftp import wpFtp
+    server = config['ftp']['server']
+    ftp = wpFtp(server=server, config=config)
+    if ftp.newer_version_exists:
+        resp = QMessageBox().question(parent, 'Newer CSV is available',
+                                      'A newer manifest file exists in the the FTP server.\n'
+                                      'This newer version contains information to list any new WorldPop productsn\n'
+                                      'It is recommend to update it for normal functionality.\n\n'
+                                      'Do this now?',
+                                      buttons=QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel,
+                                      defaultButton=QMessageBox.Yes
+                                      )
+        if resp == QMessageBox.Yes:
+            ftp.dl_wpgpDatasets()
+        if resp == QMessageBox.No:
+            pass
+        if resp == QMessageBox.Cancel:
+            return 0
+
+    return WpMainWindow(config, iface, parent=None)
 
 
 class WpMainWindow(QtWidgets.QDialog, Ui_wpMainWindow):

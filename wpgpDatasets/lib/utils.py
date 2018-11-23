@@ -12,7 +12,6 @@ from qgis.core import QgsRasterLayer
 
 from .errors import wpException
 
-gen_logger = logging.getLogger(__file__)
 
 
 def md5_digest(file: Union[Path, str], gz=False)->str:
@@ -81,19 +80,6 @@ def get_default_download_directory() -> str:
     return path
 
 
-def extension(driver: str) -> str:
-    """ Return well known extension for some critical drivers """
-    res = None
-    if driver == 'GTiff':
-        res = '.tif'
-
-    if res is None:
-        msg = "Could not determine extension for %s. Maybe not implemented?" % driver
-        gen_logger.error(msg)
-        raise wpException(msg)
-    return res
-
-
 def are_same(this: Path, other: Path) -> bool:
     """Compare if two files are the same or not, using MD5 hash. True, are the same. False are different"""
 
@@ -108,7 +94,7 @@ def are_same(this: Path, other: Path) -> bool:
 
 def resolve(name) -> Path:
     """Provided a name, returns <module_path>/name Path object."""
-    dirname = Path(__file__).parent
+    dirname = Path(__file__).parent.parent
     return dirname.joinpath(name)
 
 
@@ -127,3 +113,7 @@ def has_internet() -> bool:
 
     # Finally
     return True
+
+
+BASE_ROOT = resolve('.')
+CSV_SIGNATURE = md5_digest(BASE_ROOT / 'media/wpgpDatasets.csv.gz')
