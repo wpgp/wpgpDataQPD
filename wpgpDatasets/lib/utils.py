@@ -17,7 +17,7 @@ gen_logger = logging.getLogger(__file__)
 
 def md5_digest(file: Union[Path, str], gz=False)->str:
     """
-     Returns the MD5 signature of the file.
+     Returns the MD5 signature of the file. If the file is gz'ed, extract it contains before calculating.
     :param file: path to the file to generate the md5 signature.
     :param gz: If the file is compressed by the gz library.
     :return: MD5 hash string
@@ -64,8 +64,9 @@ def get_default_download_directory() -> str:
     if system == 'Windows':
         if sys.version_info.major == 3:
             import winreg
-        elif sys.version_info.major < 3:
+        else:
             import __winreg as winreg
+
         key = winreg.OpenKey(winreg.HKEY_CURRENT_USER,
                              r'Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders')
         path, _ = winreg.QueryValueEx(key, 'desktop')
@@ -109,3 +110,20 @@ def resolve(name) -> Path:
     """Provided a name, returns <module_path>/name Path object."""
     dirname = Path(__file__).parent
     return dirname.joinpath(name)
+
+
+def has_internet() -> bool:
+    import urllib.request as req
+    from urllib.error import URLError
+    target = 'http://www.google.com/'
+    try:
+        payload = req.urlopen(target).read(100)
+    except URLError:
+        return False
+
+    # empty payload, means we can't go through
+    if not len(payload):
+        return False
+
+    # Finally
+    return True

@@ -11,7 +11,7 @@ from PyQt5.QtWidgets import QFileDialog, QHeaderView, QMessageBox, QTreeWidgetIt
 from qgis.gui import QgisInterface
 
 from .lib import WpCsvParser
-from .lib.utils import qgis3_add_raster_to_project, get_default_download_directory
+from .lib.utils import qgis3_add_raster_to_project, get_default_download_directory, has_internet
 from .lib.about_window import Ui_AboutDialog
 from .lib.downloader import DownloadThread
 from .lib.main_window import Ui_wpMainWindow
@@ -20,6 +20,14 @@ BASE_DIR = Path(__file__).parent
 
 UI_FILE = BASE_DIR / 'ui' / 'main_window.ui'
 assert UI_FILE.is_file()
+
+
+def wpFactory(config: configparser.ConfigParser, iface: QgisInterface, parent=None):
+    if not has_internet():
+        QMessageBox().information(parent, 'No internet :(', 'This plugin requires internet to function.', QMessageBox.Ok)
+        return 0
+    else:
+        return WpMainWindow(config, iface, parent=None)
 
 
 class WpMainWindow(QtWidgets.QDialog, Ui_wpMainWindow):
@@ -51,8 +59,6 @@ class WpMainWindow(QtWidgets.QDialog, Ui_wpMainWindow):
         self.tree_widget.header().setSectionResizeMode(0, QHeaderView.ResizeToContents)
         if platform.system == 'Windows':
             self.tree_widget.header().resizeSections()
-
-        # Add the data to the TreeWidget
 
         # Adding data
         self._add_items()

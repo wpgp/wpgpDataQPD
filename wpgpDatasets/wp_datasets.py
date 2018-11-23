@@ -5,7 +5,7 @@ from pathlib import Path
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QAction
 
-from .wp_datasets_dialog import WpMainWindow
+from .wp_datasets_dialog import WpMainWindow,  wpFactory
 
 # Global Variables
 BASE_DIR = Path(__file__).parent  # Path object
@@ -31,7 +31,6 @@ class WpDatasets:
         # Declare instance attributes
         self.actions = []
         self.menu = u'&wpgpDatasets'
-        # TODO: We are going to let the user set this up in a future iteration
         self.toolbar = self.iface.addToolBar(u'wpgpDatasets')
         self.toolbar.setObjectName(u'wpgpDatasets')
 
@@ -142,6 +141,9 @@ class WpDatasets:
         config.read(INI_FILE.as_posix())
         config['app']['csv_file_gz'] = CSV_FILE_GZ.as_posix()
 
-        self.dialog = WpMainWindow(iface=self.iface, config=config)
+        self.dialog = wpFactory(iface=self.iface, config=config)
+
+        if not self.dialog:
+            return
 
         self.dialog.show()
