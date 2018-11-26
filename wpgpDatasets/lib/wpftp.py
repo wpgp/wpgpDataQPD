@@ -14,7 +14,6 @@ from tempfile import TemporaryDirectory
 
 
 from .utils import md5_digest
-from .errors import wpException
 
 
 class wpFtp(object):

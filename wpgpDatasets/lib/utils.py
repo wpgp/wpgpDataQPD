@@ -1,7 +1,6 @@
 import os
 import sys
 import gzip
-import logging
 import platform
 from hashlib import md5
 from typing import Union
@@ -9,9 +8,6 @@ from pathlib import Path
 
 from PyQt5.QtCore import QFileInfo
 from qgis.core import QgsRasterLayer
-
-from .errors import wpException
-
 
 
 def md5_digest(file: Union[Path, str], gz=False)->str:

@@ -1,5 +1,4 @@
 import configparser
-import sys
 import platform
 from pathlib import Path
 from typing import Union
@@ -11,7 +10,7 @@ from PyQt5.QtWidgets import QFileDialog, QHeaderView, QMessageBox, QTreeWidgetIt
 from qgis.gui import QgisInterface
 
 from .lib import WpCsvParser
-from .lib.utils import qgis3_add_raster_to_project, get_default_download_directory, has_internet, BASE_ROOT
+from .lib.utils import qgis3_add_raster_to_project, get_default_download_directory, has_internet
 from .lib.about_window import Ui_AboutDialog
 from .lib.downloader import DownloadThread
 from .lib.main_window import Ui_wpMainWindow
@@ -24,7 +23,8 @@ assert UI_FILE.is_file()
 
 def wpFactory(config: configparser.ConfigParser, iface: QgisInterface, parent=None):
     if not has_internet():
-        QMessageBox().information(parent, 'No internet :(', 'This plugin requires internet to function.', QMessageBox.Ok)
+        QMessageBox().information(parent, 'No internet :(', 'This plugin requires internet to function.',
+                                  QMessageBox.Ok)
         return 0
 
     from .lib.wpftp import wpFtp
@@ -51,7 +51,7 @@ def wpFactory(config: configparser.ConfigParser, iface: QgisInterface, parent=No
 
 class WpMainWindow(QtWidgets.QDialog, Ui_wpMainWindow):
 
-    def __init__(self,  config: configparser.ConfigParser, iface: QgisInterface, parent=None):
+    def __init__(self, config: configparser.ConfigParser, iface: QgisInterface, parent=None):
         super(WpMainWindow, self).__init__(parent=parent)
         self.iface = iface
         self.config = config
@@ -124,15 +124,15 @@ class WpMainWindow(QtWidgets.QDialog, Ui_wpMainWindow):
         item = item[0]
 
         # 3d index of the item contains the ftp path of the object to download
-        URL = item.data(2, QtCore.Qt.DisplayRole)
+        url = item.data(2, QtCore.Qt.DisplayRole)
 
         # Show warning that the user has not selected a valid selection.
-        if URL is None:
+        if url is None:
             QMessageBox.information(self, 'Invalid Selection', 'Please select any of the child products to download.',
                                     QMessageBox.Ok)
             return
 
-        self._do_download(URL)
+        self._do_download(url)
 
     def _do_download(self, url: Union[str, Path]):
 
@@ -187,9 +187,9 @@ class WpMainWindow(QtWidgets.QDialog, Ui_wpMainWindow):
             default_root = get_default_download_directory()
 
         # if user press cancel, it returns an Empty string
-        dirname = QFileDialog().getExistingDirectory(self, caption=caption, directory=default_root,
-                                                     options=QFileDialog.ShowDirsOnly | QFileDialog.DontResolveSymlinks
-                                                             | QFileDialog.ReadOnly)
+        dirname = QFileDialog().getExistingDirectory(
+                self, caption=caption, directory=default_root,
+                options=QFileDialog.ShowDirsOnly | QFileDialog.DontResolveSymlinks | QFileDialog.ReadOnly)
 
         if not dirname == '':
             self._download_folder = dirname
