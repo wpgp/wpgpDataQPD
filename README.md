@@ -59,4 +59,4 @@ ISSUES
 -----
 
 
-For any issues that may arise please open a ticket in our [GitHub repo](https://github.com/wpgp/wpgpDataQPD/issues)
+For any issues that may arise please open a ticket in our [GitHub repository](https://github.com/wpgp/wpgpDataQPD/issues)
