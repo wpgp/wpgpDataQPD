@@ -20,7 +20,7 @@ the WorldPop website and FTP server using a range of methods and tools.
 Installation Instructions
 -----
 
-1. Download the latest release (zip)[https://github.com/wpgp/wpgpDataQPD/releases/download/v1.0/wpgpDatasets.zip] file.
+1. Download the latest release [zip](https://github.com/wpgp/wpgpDataQPD/releases/download/v1.0/wpgpDatasets.zip) file.
 2. And extract it to the your QGIS3 addon folder: 
     * _Windows_ C:/Users/__username__/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins  
      _<Ubuntu>_ ~/.local/share/QGIS/QGIS3/profiles/default/python/plugins
