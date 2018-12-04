@@ -21,11 +21,7 @@ Installation Instructions
 -----
 
 1. Download the latest release [zip](https://github.com/wpgp/wpgpDataQPD/releases/download/v1.0/wpgpDatasets.zip) file.
-2. And extract it to the your QGIS3 addon folder: 
-    * _Windows_ C:/Users/__username__/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins  
-     _<Ubuntu>_ ~/.local/share/QGIS/QGIS3/profiles/default/python/plugins
-    * If the subfolder _plugins_ does not exist, you can create it manually.
-    ! __if__ the ../python/plugins does not exist, you can create it (or you could download any qgis addon, qgis will make it for you). 
+2. Use it with 'Install from Zip file' (found at QGIS3 -> Plugins-> Manage and install Plugins ...) 
 
  
  Usage
