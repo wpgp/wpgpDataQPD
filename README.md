@@ -20,7 +20,7 @@ the WorldPop website and FTP server using a range of methods and tools.
 Installation Instructions
 -----
 
-1. Download the latest release [zip](https://github.com/wpgp/wpgpDataQPD/releases/download/v1.0/wpgpDatasets.zip) file.
+1. Download the latest release [zip](https://github.com/wpgp/wpgpDataQPD/releases/download/v1.1/wpgpDatasets.zip) file.
 2. Use it with 'Install from Zip file' (found at QGIS3 -> Plugins-> Manage and install Plugins ...) 
 
  
