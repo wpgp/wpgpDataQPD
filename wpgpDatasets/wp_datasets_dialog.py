@@ -118,23 +118,27 @@ class WpMainWindow(QtWidgets.QDialog, Ui_wpMainWindow):
 
         # Grab and check it the URL  exists from the TreeWidget, then pass it at the download function
 
-        item = self.tree_widget.selectedItems()
-        if len(item) == 0:
-            return
-        item = item[0]
-
-        # 3d index of the item contains the ftp path of the object to download
-        url = item.data(2, QtCore.Qt.DisplayRole)
-
-        # Show warning that the user has not selected a valid selection.
-        if url is None:
-            QMessageBox.information(self, 'Invalid Selection', 'Please select any of the child products to download.',
-                                    QMessageBox.Ok)
+        items = self.tree_widget.selectedItems()
+        if len(items) == 0:
             return
 
-        self._do_download(url)
+        urls = []
+        for item in items:
 
-    def _do_download(self, url: Union[str, Path]):
+            # 3d index of the item contains the ftp path of the object to download
+            url = item.data(2, QtCore.Qt.DisplayRole)
+
+            # Show warning that the user has not selected a valid selection.
+            if url is None:
+                QMessageBox.information(self, 'Invalid Selection', 'Please select any of the child products to download.',
+                                        QMessageBox.Ok)
+                return
+
+            urls.append(url)
+
+        self._do_download(urls)
+
+    def _do_download(self, urls: Union[str, Path]):
 
         self.btn_download.setEnabled(False)
         self.btn_close.setEnabled(False)
@@ -142,7 +146,7 @@ class WpMainWindow(QtWidgets.QDialog, Ui_wpMainWindow):
         dl = DownloadThread(progress_bar=self.pb_progressBar,
                             parent=self, server=self.config['ftp']['server'])
         dl.finished.connect(self._after_download)
-        dl.run(url=url, download_folder=self._download_folder)
+        dl.run(urls=urls, download_folder=self._download_folder)
 
     def _add_items(self):
         for iso_idx, (iso_name, iso_iso3) in enumerate(self.isos):
