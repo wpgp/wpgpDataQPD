@@ -97,6 +97,17 @@ class wpFtp(object):
             return filesize
         return None
 
+    def get_total_filesize(self, ftp_absolute_paths: list) -> int or None:
+        """ Returns the total size of files from the ftp. Returns None if the file is not in the ftp """
+        filesize = 0
+        for ftp_path in ftp_absolute_paths:
+            filesize += self.ftp.size(ftp_path.as_posix())
+        # if response_code != '213':
+        #     raise wpException("Not ok return code (%s), when tried to retrieve filesize" % response_code)
+        if filesize >= 0:
+            return filesize
+        return None
+
     def download(self, from_ftp_absolute_path: Union[str, Path],
                  to_local_absolute_path: Union[str, Path], callback=None) -> Path:
         """ Download a file from the remote ftp, stores is locally.

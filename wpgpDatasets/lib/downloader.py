@@ -16,10 +16,9 @@ class DownloadThread(QObject):
         super().__init__(parent=parent)
 
         self.ftp = wpFtp(server=kwargs['server'])
-        self.url = None
+        self.urls = None
         self.download_folder = None
-        self.filename = None
-        self.filesize = 0
+        self.total_filesize = 0
         self.progress_bar = progress_bar
         self.progress = 0
 
@@ -27,7 +26,7 @@ class DownloadThread(QObject):
         # sizeof = sys.getsizeof(x)
         sizeof = len(x)
         # # self.progress_bar
-        self.progress += sizeof / self.filesize * 100
+        self.progress += sizeof / self.total_filesize * 100
         if self.progress_bar is None:
             print(int(self.progress))
         else:
@@ -40,17 +39,14 @@ class DownloadThread(QObject):
         finally:
             pass
 
-    def run(self, url: Union[str, Path], download_folder: Union[Path, str],):
-        # start by calling the start method
-
-        self.url = Path(url)  # remote path
+    def run(self, urls: Union[str, Path], download_folder: Union[Path, str],):
+        self.urls = list(map(Path, urls))  # remote paths
         self.download_folder = Path(download_folder)
-        self.filename = self.url.name
-        self.filesize = self.ftp.get_filesilze(self.url)
-        self.ftp.get_filesilze(self.url)
 
-        local_file_name = self.download_folder / self.filename
-        self.ftp.download(self.url, local_file_name, callback=lambda x: self.__pbar(x))
+        for url in self.urls:
+            self.total_filesize = self.ftp.get_total_filesize(self.urls)
+            local_file_name = self.download_folder / url.name
+            self.ftp.download(url, local_file_name, callback=lambda x: self.__pbar(x))
 
         # HACK: Fill the pbar to full if it is not full at this stage.
         if self.progress_bar and self.progress_bar.value() < self.progress_bar.maximum():
