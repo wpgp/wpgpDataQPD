@@ -26,7 +26,6 @@ repository=https://github.com/wpgp/wpgpQGIS
 # Tags are comma separated with spaces allowed
 tags=worldpop, datasets, raster
 
-homepage=http://www.worldpop.org.uk/
 category=Web
 icon=media/wp.ico
 # experimental flag
