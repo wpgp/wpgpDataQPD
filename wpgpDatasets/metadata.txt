@@ -5,7 +5,7 @@
 name=wpDatasets
 qgisMinimumVersion=3.0
 description=A simple qgis 3 addon to downlaod wp datasets from WorldPop ftp server.
-version=1.2
+version=1.2.1
 
 # Author contact information
 author=Nikolaos Ves,Maksym Bondarenko,Aron Gergely,David Kerr and Alessandro Sorichetta 
@@ -21,7 +21,7 @@ repository=https://github.com/wpgp/wpgpQGIS
 # Recommended items:
 
 # Uncomment the following line and add your changelog:
-# changelog=
+changelog=
 
 # Tags are comma separated with spaces allowed
 tags=worldpop, datasets, raster

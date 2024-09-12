@@ -1,0 +1,3 @@
+1.2.1
+Fixed a bug in the download progress bar that caused an error during download.
+
