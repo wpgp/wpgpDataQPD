@@ -31,7 +31,7 @@ class DownloadThread(QObject):
             print(int(self.progress))
         else:
             if self.progress_bar.value() != self.progress:
-                self.progress_bar.setValue(self.progress)
+                self.progress_bar.setValue(int(self.progress))
         try:
             QgsApplication.processEvents()
         except NameError:
