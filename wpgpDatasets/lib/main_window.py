@@ -6,7 +6,7 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt6 import QtCore, QtWidgets
 
 class Ui_wpMainWindow(object):
     def setupUi(self, wpMainWindow):
@@ -39,7 +39,7 @@ class Ui_wpMainWindow(object):
         self.pb_progressBar.setObjectName("pb_progressBar")
         self.MainGrid.addWidget(self.pb_progressBar, 3, 2, 1, 2)
         self.tree_widget = QtWidgets.QTreeWidget(wpMainWindow)
-        self.tree_widget.setSelectionMode(QtWidgets.QAbstractItemView.ExtendedSelection)
+        self.tree_widget.setSelectionMode(QtWidgets.QAbstractItemView.SelectionMode.ExtendedSelection)
         self.tree_widget.setObjectName("tree_widget")
         self.tree_widget.headerItem().setText(0, "1")
         self.MainGrid.addWidget(self.tree_widget, 1, 0, 1, 4)

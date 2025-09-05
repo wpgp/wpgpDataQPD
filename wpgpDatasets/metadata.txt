@@ -4,6 +4,7 @@
 [general]
 name=wpDatasets
 qgisMinimumVersion=3.0
+supportsQt6=True
 description=A simple qgis 3 addon to downlaod wp datasets from WorldPop ftp server.
 version=1.2.1
 

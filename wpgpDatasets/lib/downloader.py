@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Union
-from PyQt5.QtCore import pyqtSignal, QObject, QCoreApplication
-from PyQt5.QtWidgets import QProgressBar
+from PyQt6.QtCore import pyqtSignal, QObject, QCoreApplication
+from PyQt6.QtWidgets import QProgressBar
 # from qgis.core import QgsApplication
 
 from .wpftp import wpFtp

@@ -3,9 +3,9 @@ import platform
 from pathlib import Path
 from typing import Union
 
-from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtGui import QIcon, QPixmap
-from PyQt5.QtWidgets import QFileDialog, QHeaderView, QMessageBox, QTreeWidgetItem
+from PyQt6 import QtCore, QtWidgets
+from PyQt6.QtGui import QIcon, QPixmap
+from PyQt6.QtWidgets import QFileDialog, QHeaderView, QMessageBox, QTreeWidgetItem
 
 from qgis.gui import QgisInterface
 
@@ -36,14 +36,14 @@ def wpFactory(config: configparser.ConfigParser, iface: QgisInterface, parent=No
                                       'This newer version contains information to list any new WorldPop productsn\n'
                                       'It is recommend to update it for normal functionality.\n\n'
                                       'Do this now?',
-                                      buttons=QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel,
-                                      defaultButton=QMessageBox.Yes
+                                      buttons=QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No | QMessageBox.StandardButton.Cancel,
+                                      defaultButton=QMessageBox.StandardButton.Yes
                                       )
-        if resp == QMessageBox.Yes:
+        if resp == QMessageBox.StandardButton.Yes:
             ftp.dl_wpgpDatasets()
-        if resp == QMessageBox.No:
+        if resp == QMessageBox.StandardButton.No:
             pass
-        if resp == QMessageBox.Cancel:
+        if resp == QMessageBox.StandardButton.Cancel:
             return 0
 
     return WpMainWindow(config, iface, parent=None)
@@ -75,14 +75,14 @@ class WpMainWindow(QtWidgets.QDialog, Ui_wpMainWindow):
         self.tree_widget.setHeaderLabels(['Name', 'Description'])
         self.tree_widget.setSortingEnabled(True)
         self.tree_widget.header().setResizeContentsPrecision(500)
-        self.tree_widget.header().setSectionResizeMode(0, QHeaderView.ResizeToContents)
+        self.tree_widget.header().setSectionResizeMode(0, QHeaderView.ResizeMode.ResizeToContents)
         if platform.system == 'Windows':
             self.tree_widget.header().resizeSections()
 
         # Adding data
         self._add_items()
         # and sort
-        self.tree_widget.sortItems(0, QtCore.Qt.AscendingOrder)
+        self.tree_widget.sortItems(0, QtCore.Qt.SortOrder.AscendingOrder)
 
         # Connections
         self.btn_close.clicked.connect(self.close)
@@ -126,12 +126,12 @@ class WpMainWindow(QtWidgets.QDialog, Ui_wpMainWindow):
         for item in items:
 
             # 3d index of the item contains the ftp path of the object to download
-            url = item.data(2, QtCore.Qt.DisplayRole)
+            url = item.data(2, QtCore.Qt.ItemDataRole.DisplayRole)
 
             # Show warning that the user has not selected a valid selection.
             if url is None:
                 QMessageBox.information(self, 'Invalid Selection', 'Please select any of the child products to download.',
-                                        QMessageBox.Ok)
+                                        QMessageBox.StandardButton.Ok)
                 return
 
             urls.append(url)
@@ -193,7 +193,7 @@ class WpMainWindow(QtWidgets.QDialog, Ui_wpMainWindow):
         # if user press cancel, it returns an Empty string
         dirname = QFileDialog().getExistingDirectory(
                 self, caption=caption, directory=default_root,
-                options=QFileDialog.ShowDirsOnly | QFileDialog.DontResolveSymlinks | QFileDialog.ReadOnly)
+                options=QFileDialog.Option.ShowDirsOnly | QFileDialog.Option.DontResolveSymlinks | QFileDialog.Option.ReadOnly)
 
         if not dirname == '':
             self._download_folder = dirname

@@ -29,7 +29,7 @@ class Ui_AboutDialog(object):
         self.lbl_text.setSizePolicy(sizePolicy)
         self.lbl_text.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.lbl_text.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.lbl_text.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        self.lbl_text.setAlignment(QtCore.Qt.Alignment.AlignLeading|QtCore.Qt.Alignment.AlignLeft|QtCore.Qt.Alignment.AlignTop)
         self.lbl_text.setObjectName("lbl_text")
         self.gridLayout.addWidget(self.lbl_text, 0, 0, 1, 2)
         self.lbl_png = QtWidgets.QLabel(AboutDialog)

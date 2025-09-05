@@ -6,7 +6,7 @@ from hashlib import md5
 from typing import Union
 from pathlib import Path
 
-from PyQt5.QtCore import QFileInfo
+from PyQt6.QtCore import QFileInfo
 from qgis.core import QgsRasterLayer
 
 

@@ -2,8 +2,7 @@
 import configparser
 from pathlib import Path
 
-from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QAction
+from PyQt6.QtGui import QIcon, QAction
 
 from .wp_datasets_dialog import WpMainWindow,  wpFactory
 
